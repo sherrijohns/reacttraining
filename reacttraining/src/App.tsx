@@ -16,12 +16,12 @@ export function App() {
   useEffect(() => {
     async function callGetFoods() {
       const response = await getFoods();
-      debugger;
       if (!response.ok) throw new Error("Call to getFoods failed");
       const json: Food[] = await response.json();
       setFoods(json);
     }
     callGetFoods();
+    // Using empty array for useEffect since we only want this to run once
   }, []);
   return (
     <>
@@ -30,6 +30,7 @@ export function App() {
       <table>
         <thead>
           <tr>
+            <th></th>
             <th>Name</th>
             <th>Quantity</th>
             <th>Category</th>
@@ -39,6 +40,9 @@ export function App() {
         <tbody>
           {foods.map((food, index) => (
             <tr key={food.id}>
+              <td>
+                <button onClick={() => alert("clicked")}>Delete</button>
+              </td>
               <td>{food.name}</td>
               <td>{food.quantity}</td>
               <td>{food.category}</td>
