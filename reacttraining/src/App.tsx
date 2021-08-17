@@ -1,3 +1,7 @@
+import React from "react";
+import { useEffect, useState } from "react";
+import { getFoods } from "./api/foodsApi";
+
 type Food = {
   id: number;
   name: string;
@@ -6,31 +10,19 @@ type Food = {
   category: string;
 };
 
-const foods: Food[] = [
-  {
-    id: 1,
-    name: "Carrot",
-    quantity: 10,
-    minquantity: 5,
-    category: "Vegetable",
-  },
-  {
-    id: 2,
-    name: "Potato",
-    quantity: 20,
-    minquantity: 10,
-    category: "Vegetable",
-  },
-  {
-    id: 3,
-    name: "Rice Krispy",
-    quantity: 12,
-    minquantity: 2,
-    category: "Snack",
-  },
-];
-
 export function App() {
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  useEffect(() => {
+    async function callGetFoods() {
+      const response = await getFoods();
+      debugger;
+      if (!response.ok) throw new Error("Call to getFoods failed");
+      const json: Food[] = await response.json();
+      setFoods(json);
+    }
+    callGetFoods();
+  }, []);
   return (
     <>
       <h1>E-gineering Pantry Manager</h1>

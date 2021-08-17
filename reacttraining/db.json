@@ -1,0 +1,56 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "foods": [
+    {
+      "id": 1,
+      "name": "Carrot",
+      "quantity": 10,
+      "minquantity": 5,
+      "category": "Vegetable"
+    },
+    {
+      "id": 2,
+      "name": "Potato",
+      "quantity": 20,
+      "minquantity": 10,
+      "category": "Vegetable"
+    },
+    {
+      "id": 3,
+      "name": "Rice Krispy",
+      "quantity": 12,
+      "minquantity": 2,
+      "category": "Snack"
+    },
+    {
+      "id": 4,
+      "name": "Pretzels",
+      "quantity": 15,
+      "minquantity": 6,
+      "category": "Snack"
+    },
+    {
+      "id": 5,
+      "name": "Doritos",
+      "quantity": 18,
+      "minquantity": 10,
+      "category": "Snack"
+    }
+  ]
+}
