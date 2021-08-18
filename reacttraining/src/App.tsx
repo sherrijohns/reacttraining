@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getFoods, deleteFood, saveFood } from "./api/foodsApi";
 import { Input } from "./shared/Input";
 import { Select } from "./shared/Select";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export type Food = {
   id: number;
@@ -60,18 +62,21 @@ export function App() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      await saveFood(newFood);
-      //setFoods([...foods, newFood]);
-      const _foods = await getFoods();
-      setFoods(_foods);
+      const mynewfood = await saveFood(newFood);
+      setFoods([...foods, mynewfood]);
+      //   const _foods = await getFoods();
+      //  setFoods(_foods);
       setNewFood(emptyFood);
-    } catch (error) {}
+      toast.success("Food saved! 🦄");
+    } catch (error) {
+      toast.error("Failed to add");
+    }
   }
 
   return (
     <>
       <h1>E-gineering Pantry Manager</h1>
-
+      <ToastContainer />
       {/* Exercise 1: Create a reusable Select and consume it below for Food Type 
 
         1. Vegetable
