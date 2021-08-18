@@ -1,17 +1,23 @@
-import React from "react";
-// this is a typescript type
-// if you wanted to extend it, could use an interface
 type InputProps = {
   label: string;
   id: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  type?: "text" | "number" | "email" | "phone" | "date";
 };
 
-export function Input(props: InputProps) {
+export function Input({
+  label,
+  id,
+  value,
+  onChange,
+  type = "text",
+}: InputProps) {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
+      <label htmlFor={id}>{label}</label>
       <br />
-      <input type="text" id={props.id} />
+      <input onChange={onChange} id={id} type={type} value={value} />
     </div>
   );
 }

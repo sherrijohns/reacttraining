@@ -21,36 +21,64 @@
       "id": 1,
       "name": "Carrot",
       "quantity": 10,
-      "minquantity": 5,
-      "category": "Vegetable"
+      "minQuantity": 5,
+      "type": "Vegetable"
     },
     {
       "id": 2,
       "name": "Potato",
       "quantity": 20,
-      "minquantity": 10,
-      "category": "Vegetable"
+      "minQuantity": 10,
+      "type": "Vegetable"
     },
     {
       "id": 3,
       "name": "Rice Krispy",
       "quantity": 12,
-      "minquantity": 2,
-      "category": "Snack"
+      "minQuantity": 2,
+      "type": "Junk"
     },
     {
       "id": 4,
       "name": "Pretzels",
       "quantity": 15,
-      "minquantity": 6,
-      "category": "Snack"
+      "minQuantity": 6,
+      "type": "Junk"
     },
     {
       "id": 5,
       "name": "Doritos",
       "quantity": 18,
-      "minquantity": 10,
-      "category": "Snack"
+      "minQuantity": 10,
+      "type": "Junk"
+    },
+    {
+      "name": "Chocolate Chip Cookies",
+      "quantity": "12",
+      "minQuantity": "8",
+      "type": "Junk",
+      "id": 6
+    },
+    {
+      "name": "Chocolate Milk",
+      "quantity": "5",
+      "minQuantity": "2",
+      "type": "Drink",
+      "id": 7
+    },
+    {
+      "name": "Beef Jerky",
+      "quantity": "9",
+      "minQuantity": "3",
+      "type": "Junk",
+      "id": 8
+    },
+    {
+      "name": "Fruit Roll Up",
+      "quantity": "3",
+      "minQuantity": "1",
+      "type": "Fruit",
+      "id": 9
     }
   ]
 }
