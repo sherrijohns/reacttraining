@@ -1,84 +1,154 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { getFoods } from "./api/foodsApi";
-import { Input } from "./shared/input";
-import { Select } from "./shared/select";
+import React, { useEffect, useState } from "react";
+import { getFoods, deleteFood, saveFood } from "./api/foodsApi";
+import { Input } from "./shared/Input";
+import { Select } from "./shared/Select";
 
-type Food = {
+export type Food = {
   id: number;
   name: string;
   quantity: number;
-  minquantity: number;
-  category: string;
+  minQuantity: number;
+  type: string;
 };
-const categoryoptions = [
-  {
-    value: "1",
-    label: "Vegetable",
-  },
-  {
-    value: "2",
-    label: "Grain",
-  },
-  {
-    value: "3",
-    label: "Fruit",
-  },
-  {
-    value: "4",
-    label: "Snack",
-  },
-];
+
+export type NewFood = {
+  name: string;
+  quantity: number;
+  minQuantity: number;
+  type: string;
+};
+
+const emptyFood: NewFood = {
+  name: "",
+  quantity: 0,
+  minQuantity: 0,
+  type: "",
+};
 
 export function App() {
   const [foods, setFoods] = useState<Food[]>([]);
+  const [newFood, setNewFood] = useState<NewFood>(emptyFood);
+
+  // Long form of the above that avoids using array destructuring.
+  // const foodStateArray = useState<Food[]>([]);
+  // const foods = foodStateArray[0];
+  // const setFoods = foodStateArray[1];
 
   useEffect(() => {
     async function callGetFoods() {
-      const response = await getFoods();
-      if (!response.ok) throw new Error("Call to getFoods failed");
-      const json: Food[] = await response.json();
-      setFoods(json);
+      // Using underscore to avoid naming conflict
+      const _foods = await getFoods();
+      setFoods(_foods);
     }
     callGetFoods();
-    // Using empty array for useEffect since we only want this to run once
+    // Using empty array for useEffect since we only want this to run once.
   }, []);
+
+  // Implementing single onChange handler by convention.
+  // id coorellates to the property in state.
+  function onChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { value, id } = event.target;
+    // Create a copy of existing state, but change the name property to the new value
+    setNewFood({
+      ...newFood,
+      [id]: value,
+    });
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      await saveFood(newFood);
+      //setFoods([...foods, newFood]);
+      const _foods = await getFoods();
+      setFoods(_foods);
+      setNewFood(emptyFood);
+    } catch (error) {}
+  }
+
   return (
     <>
       <h1>E-gineering Pantry Manager</h1>
-      <form>
-        <h3>Add New Pantry Item</h3>
-        <Input id="name" label="Name" />
-        <Input id="quantity" label="Quantity" />
-        <Input id="minquantity" label="Min Qty" />
-        <Select
-          id="category"
-          label="Category"
-          options={categoryoptions}
-          placeholder="Select Type"
+
+      {/* Exercise 1: Create a reusable Select and consume it below for Food Type 
+
+        1. Vegetable
+        2. Grain
+        3. Fruit
+      */}
+
+      <form onSubmit={handleSubmit}>
+        <Input
+          onChange={onChange}
+          id="name"
+          label="Name"
+          value={newFood.name}
         />
+        <Input
+          onChange={onChange}
+          id="quantity"
+          label="Quantity"
+          type="number"
+          value={newFood.quantity.toString()}
+        />
+        <Input
+          onChange={onChange}
+          id="minQuantity"
+          label="Min Quantity"
+          type="number"
+          value={newFood.minQuantity.toString()}
+        />
+        <Select
+          id="type"
+          onChange={onChange}
+          label="Type"
+          placeholderOption="Select Type"
+          value={newFood.type}
+          options={[
+            { label: "Vegetable", value: "Vegetable" },
+            { label: "Grain", value: "Grain" },
+            { label: "Fruit", value: "Fruit" },
+            { label: "Nut", value: "Nut" },
+            { label: "Junk Food", value: "Junk" },
+            { label: "Drink", value: "Drink" },
+          ]}
+        />
+        <br />
+        <input className="btn btn-primary" type="submit" value="Save Food" />
+        <hr />
       </form>
-      <br />
+
       <table>
         <thead>
           <tr>
             <th></th>
             <th>Name</th>
             <th>Quantity</th>
-            <th>Category</th>
-            <th>Min Qty</th>
+            <th>Min Quantity</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
-          {foods.map((food, index) => (
-            <tr key={food.id}>
+          {foods.map((food) => (
+            <tr key={food.name}>
               <td>
-                <button onClick={() => alert("clicked")}>Delete</button>
+                <button
+                  onClick={async () => {
+                    await deleteFood(food.id);
+                    // Return a new array with the id that was just deleted omitted.
+                    const newFoods = foods.filter((f) => f.id !== food.id);
+                    setFoods(newFoods);
+                  }}
+                >
+                  Delete
+                </button>
               </td>
               <td>{food.name}</td>
               <td>{food.quantity}</td>
-              <td>{food.category}</td>
-              <td>{food.minquantity}</td>
+              <td>{food.minQuantity}</td>
+              <td>{food.type}</td>
             </tr>
           ))}
         </tbody>
