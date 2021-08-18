@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { getFoods } from "./api/foodsApi";
+import { Input } from "./shared/input";
+import { Select } from "./shared/select";
 
 type Food = {
   id: number;
@@ -9,6 +11,24 @@ type Food = {
   minquantity: number;
   category: string;
 };
+const categoryoptions = [
+  {
+    value: "1",
+    label: "Vegetable",
+  },
+  {
+    value: "2",
+    label: "Grain",
+  },
+  {
+    value: "3",
+    label: "Fruit",
+  },
+  {
+    value: "4",
+    label: "Snack",
+  },
+];
 
 export function App() {
   const [foods, setFoods] = useState<Food[]>([]);
@@ -26,7 +46,19 @@ export function App() {
   return (
     <>
       <h1>E-gineering Pantry Manager</h1>
-      {/* example of a concise arrow function */}
+      <form>
+        <h3>Add New Pantry Item</h3>
+        <Input id="name" label="Name" />
+        <Input id="quantity" label="Quantity" />
+        <Input id="minquantity" label="Min Qty" />
+        <Select
+          id="category"
+          label="Category"
+          options={categoryoptions}
+          placeholder="Select Type"
+        />
+      </form>
+      <br />
       <table>
         <thead>
           <tr>
