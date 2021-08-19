@@ -1,4 +1,5 @@
-import { Food, NewFood } from "../App";
+import { NewFood } from "../FoodForm";
+import { Food } from "../App";
 
 export async function getFoods() {
   const response = await fetch("http://localhost:3001/foods");

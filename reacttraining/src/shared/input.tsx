@@ -14,10 +14,16 @@ export function Input({
   type = "text",
 }: InputProps) {
   return (
-    <div>
+    <div className="form-group">
       <label htmlFor={id}>{label}</label>
       <br />
-      <input onChange={onChange} id={id} type={type} value={value} />
+      <input
+        onChange={onChange}
+        id={id}
+        type={type}
+        value={value}
+        className="form-control-sm"
+      />
     </div>
   );
 }

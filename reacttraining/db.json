@@ -79,6 +79,13 @@
       "minQuantity": "1",
       "type": "Fruit",
       "id": 9
+    },
+    {
+      "name": "Coffee",
+      "quantity": "20",
+      "minQuantity": "15",
+      "type": "Drink",
+      "id": 10
     }
   ]
 }

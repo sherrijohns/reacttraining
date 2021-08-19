@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getFoods, deleteFood, saveFood } from "./api/foodsApi";
-import { Input } from "./shared/Input";
-import { Select } from "./shared/Select";
-import { ToastContainer, toast } from "react-toastify";
+import { getFoods, deleteFood } from "./api/foodsApi";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export type Food = {
@@ -13,23 +11,8 @@ export type Food = {
   type: string;
 };
 
-export type NewFood = {
-  name: string;
-  quantity: number;
-  minQuantity: number;
-  type: string;
-};
-
-const emptyFood: NewFood = {
-  name: "",
-  quantity: 0,
-  minQuantity: 0,
-  type: "",
-};
-
 export function App() {
   const [foods, setFoods] = useState<Food[]>([]);
-  const [newFood, setNewFood] = useState<NewFood>(emptyFood);
 
   // Long form of the above that avoids using array destructuring.
   // const foodStateArray = useState<Food[]>([]);
@@ -46,33 +29,6 @@ export function App() {
     // Using empty array for useEffect since we only want this to run once.
   }, []);
 
-  // Implementing single onChange handler by convention.
-  // id coorellates to the property in state.
-  function onChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) {
-    const { value, id } = event.target;
-    // Create a copy of existing state, but change the name property to the new value
-    setNewFood({
-      ...newFood,
-      [id]: value,
-    });
-  }
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    try {
-      const mynewfood = await saveFood(newFood);
-      setFoods([...foods, mynewfood]);
-      //   const _foods = await getFoods();
-      //  setFoods(_foods);
-      setNewFood(emptyFood);
-      toast.success("Food saved! 🦄");
-    } catch (error) {
-      toast.error("Failed to add");
-    }
-  }
-
   return (
     <>
       <h1>E-gineering Pantry Manager</h1>
@@ -84,55 +40,14 @@ export function App() {
         3. Fruit
       */}
 
-      <form onSubmit={handleSubmit}>
-        <Input
-          onChange={onChange}
-          id="name"
-          label="Name"
-          value={newFood.name}
-        />
-        <Input
-          onChange={onChange}
-          id="quantity"
-          label="Quantity"
-          type="number"
-          value={newFood.quantity.toString()}
-        />
-        <Input
-          onChange={onChange}
-          id="minQuantity"
-          label="Min Quantity"
-          type="number"
-          value={newFood.minQuantity.toString()}
-        />
-        <Select
-          id="type"
-          onChange={onChange}
-          label="Type"
-          placeholderOption="Select Type"
-          value={newFood.type}
-          options={[
-            { label: "Vegetable", value: "Vegetable" },
-            { label: "Grain", value: "Grain" },
-            { label: "Fruit", value: "Fruit" },
-            { label: "Nut", value: "Nut" },
-            { label: "Junk Food", value: "Junk" },
-            { label: "Drink", value: "Drink" },
-          ]}
-        />
-        <br />
-        <input className="btn btn-primary" type="submit" value="Save Food" />
-        <hr />
-      </form>
-
-      <table>
+      <table className="table table-striped table-bordered table-sm w-50">
         <thead>
           <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Min Quantity</th>
-            <th>Type</th>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Min Quantity</th>
+            <th scope="col">Type</th>
           </tr>
         </thead>
         <tbody>

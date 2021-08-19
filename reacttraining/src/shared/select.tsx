@@ -22,10 +22,15 @@ export function Select({
   onChange,
 }: SelectProps) {
   return (
-    <div>
+    <div className="form-group">
       <label htmlFor={id}>{label}</label>
       <br />
-      <select id={id} onChange={onChange} value={value}>
+      <select
+        id={id}
+        onChange={onChange}
+        value={value}
+        className="form-control-sm"
+      >
         <option value="">{placeholderOption}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
