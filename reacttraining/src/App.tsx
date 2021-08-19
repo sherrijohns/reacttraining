@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getFoods, deleteFood } from "./api/foodsApi";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 export type Food = {
   id: number;
@@ -33,6 +34,12 @@ export function App() {
     <>
       <h1>E-gineering Pantry Manager</h1>
       <ToastContainer />
+      <div>
+        <Link className="btn btn-secondary" to="/foodform">
+          New Food
+        </Link>
+      </div>
+
       {/* Exercise 1: Create a reusable Select and consume it below for Food Type 
 
         1. Vegetable
@@ -40,7 +47,7 @@ export function App() {
         3. Fruit
       */}
 
-      <table className="table table-striped table-bordered table-sm w-50">
+      <table className="table table-striped table-bordered table-sm">
         <thead>
           <tr>
             <th scope="col"></th>
@@ -52,7 +59,7 @@ export function App() {
         </thead>
         <tbody>
           {foods.map((food) => (
-            <tr key={food.name}>
+            <tr key={food.id}>
               <td>
                 <button
                   onClick={async () => {
@@ -65,9 +72,17 @@ export function App() {
                   Delete
                 </button>
               </td>
-              <td>{food.name}</td>
-              <td>{food.quantity}</td>
-              <td>{food.minQuantity}</td>
+              <td>
+                <Link to={"/foodform/" + food.id}>{food.name}</Link>
+              </td>
+              <td
+                className={
+                  food.quantity < food.minQuantity ? "text-danger fw-bold" : ""
+                }
+              >
+                {food.quantity}
+              </td>
+              <td> {food.minQuantity}</td>
               <td>{food.type}</td>
             </tr>
           ))}

@@ -8,9 +8,6 @@ export function Nav() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/foodform">New Food</Link>
-        </li>
-        <li>
           <Link to="/about">About</Link>
         </li>
       </ul>

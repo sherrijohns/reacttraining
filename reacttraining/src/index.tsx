@@ -17,7 +17,10 @@ render(
     <Route path="/about">
       <About />
     </Route>
-    <Route path="/foodform">
+    <Route path="/foodform" exact>
+      <FoodForm />
+    </Route>
+    <Route path="/foodform/:foodId">
       <FoodForm />
     </Route>
     <Route path="/" exact>
