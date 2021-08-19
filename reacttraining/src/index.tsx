@@ -6,26 +6,9 @@ import { About } from "./About";
 import { Nav } from "./Nav";
 
 // This is a named import (preferred by Cory)
+import { QueryClient, QueryClientProvider } from "react-query";
 import { App } from "./App";
-import { FoodForm } from "./FoodForm";
-
 //render(<Heading message="hello (from parms)" />, document.getElementById("root"));
 //render(<Heading>hello lunch!</Heading>, document.getElementById("root"));
-render(
-  <BrowserRouter>
-    <Nav />
-    <Route path="/about">
-      <About />
-    </Route>
-    <Route path="/foodform" exact>
-      <FoodForm />
-    </Route>
-    <Route path="/foodform/:foodId">
-      <FoodForm />
-    </Route>
-    <Route path="/" exact>
-      <App />
-    </Route>
-  </BrowserRouter>,
-  document.getElementById("root")
-);
+
+render(<App />, document.getElementById("root"));

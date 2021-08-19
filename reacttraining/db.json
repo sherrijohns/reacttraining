@@ -18,11 +18,11 @@
   },
   "foods": [
     {
-      "id": 3,
       "name": "Rice Krispy",
+      "minQuantity": "3",
       "quantity": 12,
-      "minQuantity": 2,
-      "type": "Junk"
+      "type": "Junk",
+      "id": 3
     },
     {
       "name": "Pretzels",
